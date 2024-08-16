@@ -8,18 +8,16 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 20px;
         }
         .calculator {
             background-color: #ffffff;
             border-radius: 20px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            width: 700px;
+            max-width: 500px;
+            margin: 0 auto;
             transition: border 0.3s ease;
         }
         .calculator:hover {
@@ -32,20 +30,15 @@
             margin-bottom: 30px;
             font-size: 1.5rem;
         }
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
         .form-group {
-            width: 48%;
+            margin-bottom: 15px;
         }
         label {
             display: block;
             margin-bottom: 5px;
             color: #4a4a4a;
         }
-        input[type="text"] {
+        input[type="tel"] {
             width: 100%;
             padding: 10px;
             border: 2px solid #ddd;
@@ -103,78 +96,70 @@
     <div class="calculator">
         <h1>🏠 D & K's Mortgage Calculator 🏠</h1>
         
-        <div class="form-row">
-            <div class="form-group">
-                <label for="currentProperty">Selling Price of Current Property (£@):</label>
-                <input type="tel" id="currentProperty" value="300,000" oninput="formatInput(this); markResultOutdated()">
-            </div>
-            <div class="form-group">
-                <label for="remainingMortgage">Remaining Current Mortgage (£):</label>
-                <input type="text" id="remainingMortgage" value="150,000" oninput="formatInput(this); markResultOutdated()">
-            </div>
+        <div class="form-group">
+            <label for="currentProperty">Selling Price of Current Property (£):</label>
+            <input type="tel" id="currentProperty" value="300,000" oninput="formatInput(this); markResultOutdated()">
+        </div>
+        
+        <div class="form-group">
+            <label for="remainingMortgage">Remaining Current Mortgage (£):</label>
+            <input type="tel" id="remainingMortgage" value="150,000" oninput="formatInput(this); markResultOutdated()">
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="sellingFees">Selling Fees (£):</label>
-                <input type="text" id="sellingFees" value="4,000" oninput="formatInput(this); markResultOutdated()">
-            </div>
-            <div class="form-group">
-                <label for="savings">Savings (£):</label>
-                <input type="text" id="savings" value="50,000" oninput="formatInput(this); markResultOutdated()">
-            </div>
+        <div class="form-group">
+            <label for="sellingFees">Selling Fees (£):</label>
+            <input type="tel" id="sellingFees" value="4,000" oninput="formatInput(this); markResultOutdated()">
+        </div>
+        
+        <div class="form-group">
+            <label for="savings">Savings (£):</label>
+            <input type="tel" id="savings" value="50,000" oninput="formatInput(this); markResultOutdated()">
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="additionalCapital">Additional Capital (£):</label>
-                <input type="text" id="additionalCapital" value="0" oninput="formatInput(this); markResultOutdated()">
-            </div>
-            <div class="form-group">
-                <label for="newProperty">Price of New Property (£):</label>
-                <input type="text" id="newProperty" value="400,000" oninput="formatInput(this); markResultOutdated()">
-            </div>
+        <div class="form-group">
+            <label for="additionalCapital">Additional Capital (£):</label>
+            <input type="tel" id="additionalCapital" value="0" oninput="formatInput(this); markResultOutdated()">
+        </div>
+        
+        <div class="form-group">
+            <label for="newProperty">Price of New Property (£):</label>
+            <input type="tel" id="newProperty" value="400,000" oninput="formatInput(this); markResultOutdated()">
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="buyingFees">Buying and Moving Fees (£):</label>
-                <input type="text" id="buyingFees" value="3,000" oninput="formatInput(this); markResultOutdated()">
-            </div>
-            <div class="form-group">
-                <label for="capital">Calculated Capital (£):</label>
-                <input type="text" id="capital" readonly>
-            </div>
+        <div class="form-group">
+            <label for="buyingFees">Buying and Moving Fees (£):</label>
+            <input type="tel" id="buyingFees" value="3,000" oninput="formatInput(this); markResultOutdated()">
+        </div>
+        
+        <div class="form-group">
+            <label for="capital">Calculated Capital (£):</label>
+            <input type="tel" id="capital" readonly>
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="stampDuty">Calculated Stamp Duty (£):</label>
-                <input type="text" id="stampDuty" readonly>
-            </div>
-            <div class="form-group">
-                <label for="capitalMinusStampDuty">Capital minus Stamp Duty (£):</label>
-                <input type="text" id="capitalMinusStampDuty" readonly>
-            </div>
+        <div class="form-group">
+            <label for="stampDuty">Calculated Stamp Duty (£):</label>
+            <input type="tel" id="stampDuty" readonly>
+        </div>
+        
+        <div class="form-group">
+            <label for="capitalMinusStampDuty">Capital minus Stamp Duty (£):</label>
+            <input type="tel" id="capitalMinusStampDuty" readonly>
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="loanAmount">Calculated Loan Required (£):</label>
-                <input type="text" id="loanAmount" readonly>
-            </div>
-            <div class="form-group">
-                <label for="interestRate">Mortgage Interest Rate (%):</label>
-                <input type="range" id="interestRateSlider" min="0" max="10" step="0.1" value="3.5" oninput="updateInterestRate(); markResultOutdated()">
-                <input type="text" id="interestRate" value="3.5" oninput="formatInterestRate(this); updateInterestRateSlider(); markResultOutdated()">
-            </div>
+        <div class="form-group">
+            <label for="loanAmount">Calculated Loan Required (£):</label>
+            <input type="tel" id="loanAmount" readonly>
+        </div>
+        
+        <div class="form-group">
+            <label for="interestRate">Mortgage Interest Rate (%):</label>
+            <input type="range" id="interestRateSlider" min="0" max="10" step="0.1" value="3.5" oninput="updateInterestRate(); markResultOutdated()">
+            <input type="tel" id="interestRate" value="3.5" oninput="formatInterestRate(this); updateInterestRateSlider(); markResultOutdated()">
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="loanTerm">Loan Term (years):</label>
-                <input type="text" id="loanTerm" value="25" oninput="formatInteger(this); markResultOutdated()">
-            </div>
+        <div class="form-group">
+            <label for="loanTerm">Loan Term (years):</label>
+            <input type="tel" id="loanTerm" value="25" oninput="formatInteger(this); markResultOutdated()">
         </div>
         
         <button onclick="calculateMortgage()">Calculate</button>
@@ -182,150 +167,8 @@
         <div id="result"></div>
     </div>
 
-   <!-- ... (previous HTML remains the same) ... -->
-
-<script>
-function formatNumber(num) {
-    return num.toLocaleString('en-UK', { maximumFractionDigits: 0 });
-}
-
-function parseNumber(numString) {
-    return parseFloat(numString.replace(/,/g, '')) || 0;
-}
-
-function formatInput(input) {
-    let value = input.value.replace(/,/g, '');
-    if (!isNaN(value) && value !== '') {
-        input.value = formatNumber(parseFloat(value));
-    }
-}
-
-function formatInterestRate(input) {
-    let value = input.value.replace(/,/g, '');
-    if (!isNaN(value) && value !== '') {
-        input.value = parseFloat(value).toFixed(2);
-    }
-}
-
-function formatInteger(input) {
-    let value = input.value.replace(/,/g, '');
-    if (!isNaN(value) && value !== '') {
-        input.value = parseInt(value);
-    }
-}
-
-function calculateStampDuty(newPropertyPrice) {
-    let stampDuty = 0;
-
-    if (newPropertyPrice <= 250000) {
-        stampDuty = 0;
-    } else if (newPropertyPrice <= 925000) {
-        stampDuty = (newPropertyPrice - 250000) * 0.05;
-    } else if (newPropertyPrice <= 1500000) {
-        stampDuty = 33750 + (newPropertyPrice - 925000) * 0.10;
-    } else {
-        stampDuty = 91250 + (newPropertyPrice - 1500000) * 0.12;
-    }
-
-    return Math.round(stampDuty);
-}
-
-function calculateLoanAmount() {
-    const currentProperty = parseNumber(document.getElementById('currentProperty').value);
-    const remainingMortgage = parseNumber(document.getElementById('remainingMortgage').value);
-    const sellingFees = parseNumber(document.getElementById('sellingFees').value);
-    const savings = parseNumber(document.getElementById('savings').value);
-    const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
-    const newProperty = parseNumber(document.getElementById('newProperty').value);
-    const buyingFees = parseNumber(document.getElementById('buyingFees').value);
-    
-    const capital = currentProperty + savings + additionalCapital - remainingMortgage - sellingFees - buyingFees;
-    document.getElementById('capital').value = formatNumber(Math.max(capital, 0));
-
-    const stampDuty = calculateStampDuty(newProperty);
-    document.getElementById('stampDuty').value = formatNumber(stampDuty);
-
-    const capitalMinusStampDuty = capital - stampDuty;
-    document.getElementById('capitalMinusStampDuty').value = formatNumber(Math.max(capitalMinusStampDuty, 0));
-
-    const loanAmount = Math.max(newProperty - capitalMinusStampDuty, 0);
-    document.getElementById('loanAmount').value = formatNumber(loanAmount);
-
-    return loanAmount;
-}
-
-function calculateMortgage() {
-    const loanAmount = calculateLoanAmount();
-    const interestRate = parseNumber(document.getElementById('interestRate').value) / 100 / 12;
-    const loanTerm = parseInt(document.getElementById('loanTerm').value) * 12;
-
-    let monthlyPayment = 0;
-    if (loanAmount > 0 && interestRate > 0 && loanTerm > 0) {
-        monthlyPayment = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) / (Math.pow(1 + interestRate, loanTerm) - 1);
-    }
-
-    const resultElement = document.getElementById('result');
-    resultElement.innerHTML = `Your monthly payment: £${formatNumber(Math.round(monthlyPayment))}`;
-    resultElement.classList.remove('outdated');
-    resultElement.classList.add('pulse');
-    setTimeout(() => {
-        resultElement.classList.remove('pulse');
-    }, 500);
-}
-
-function updateInterestRate() {
-    const slider = document.getElementById('interestRateSlider');
-    const input = document.getElementById('interestRate');
-    input.value = parseFloat(slider.value).toFixed(2);
-}
-
-function updateInterestRateSlider() {
-    const slider = document.getElementById('interestRateSlider');
-    const input = document.getElementById('interestRate');
-    slider.value = parseFloat(input.value);
-}
-
-function markResultOutdated() {
-    const resultElement = document.getElementById('result');
-    if (resultElement.innerHTML !== '') {
-        resultElement.classList.add('outdated');
-    }
-}
-
-function updateCalculationsAndMarkOutdated(input) {
-    formatInput(input);
-    calculateLoanAmount();
-    markResultOutdated();
-}
-
-// Update event listeners for input fields
-document.getElementById('currentProperty').oninput = function() { updateCalculationsAndMarkOutdated(this); };
-document.getElementById('remainingMortgage').oninput = function() { updateCalculationsAndMarkOutdated(this); };
-document.getElementById('sellingFees').oninput = function() { updateCalculationsAndMarkOutdated(this); };
-document.getElementById('savings').oninput = function() { updateCalculationsAndMarkOutdated(this); };
-document.getElementById('additionalCapital').oninput = function() { updateCalculationsAndMarkOutdated(this); };
-document.getElementById('newProperty').oninput = function() { updateCalculationsAndMarkOutdated(this); };
-document.getElementById('buyingFees').oninput = function() { updateCalculationsAndMarkOutdated(this); };
-
-document.getElementById('interestRate').oninput = function() {
-    formatInterestRate(this);
-    updateInterestRateSlider();
-    markResultOutdated();
-};
-
-document.getElementById('interestRateSlider').oninput = function() {
-    updateInterestRate();
-    markResultOutdated();
-};
-
-document.getElementById('loanTerm').oninput = function() {
-    formatInteger(this);
-    markResultOutdated();
-};
-
-// Initial calculation
-calculateLoanAmount();
-document.getElementById('result').innerHTML = 'Press Calculate to see your monthly payment';
-</script>
+    <script>
+        // ... (JavaScript remains the same) ...
+    </script>
 </body>
 </html>

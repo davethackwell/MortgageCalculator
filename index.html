@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏠 D & K's Mortgage Calculator 🐈</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>D & K's Mortgage Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #e6e6e6;
             margin: 0;
             padding: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
         .calculator {
             background-color: #ffffff;
@@ -24,48 +25,55 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: relative;
-            height: 750px; /* Increased height to ensure all elements fit */
+            height: 630px;
             display: flex;
             flex-direction: column;
             align-items: center;
             box-sizing: border-box;
+            padding: 20px;
         }
         .section {
-            padding: 20px;
+            padding: 10px;
             box-sizing: border-box;
             display: none;
             flex-direction: column;
             justify-content: flex-start;
             height: 100%;
             width: 100%;
+            align-items: center;
         }
         .section.active {
             display: flex;
         }
         h1, h2 {
+            font-size: 1.7rem;
             text-align: center;
             color: #4a4a4a;
-            margin-top: 0;
+            margin: 0;
+            margin-top: 0px;
+            margin-bottom: 25px;
         }
-        h1 {
-            font-size: 1.3rem;
+        .h2 {
+            font-size: 1.4rem;
+        }
+        p {
+            font-size: 1rem;
             margin-bottom: 20px;
-            margin-top: 20px; /* Added margin to create space above the title */
-        }
-        h2 {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
+            color: #4a4a4a;
+            text-align: left;
         }
         .form-group {
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             width: 100%;
             display: flex;
             flex-direction: column;
+            align-items: left;
         }
         label {
             display: block;
             margin-bottom: 5px;
             color: #4a4a4a;
+            text-align: left;
         }
         input[type="text"] {
             width: 100%;
@@ -81,6 +89,7 @@
         .input-slider-group {
             display: flex;
             width: 100%;
+            justify-content: center;
         }
         .input-slider-group input[type="text"] {
             width: 50%;
@@ -92,13 +101,22 @@
         .button-group {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-top: auto;
             width: 100%;
             padding-top: 20px;
             box-sizing: border-box;
         }
+        .button-group-right, .button-group-left {
+            display: flex;
+            justify-content: center;
+            width: 48%;
+        }
+        .button-group .spacer {
+            width: 4%;
+        }
         button {
-            padding: 10px 20px;
+            padding: 8px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -106,7 +124,8 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s;
-            width: 48%;
+            width: 100%;
+            height: 40px;
         }
         button:hover {
             background-color: #45a049;
@@ -118,16 +137,19 @@
             background-color: #FB8C00;
         }
         #result {
-            margin-top: 10px; /* Adjusted margin to move it slightly up */
+            margin-top: 10px;
             padding: 15px;
             background-color: #e9f7ef;
             border-radius: 5px;
             text-align: center;
-            font-weight: bold;
             color: #4a4a4a;
             width: 100%;
             box-sizing: border-box;
             min-height: 50px;
+            transition: opacity 0.3s ease, text-decoration 0.3s ease;
+        }
+        #result strong {
+            font-weight: bold;
         }
         .progress-bar {
             width: 100%;
@@ -145,7 +167,54 @@
         .fade-strike {
             opacity: 0.6;
             text-decoration: line-through;
-            transition: opacity 0.3s ease, text-decoration 0.3s ease;
+        }
+        .switch-container {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .cat-mode-label {
+            font-size: 1.5rem;
+            margin-left: 10px;
         }
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -155,14 +224,110 @@
         .pulse {
             animation: pulse 0.5s;
         }
+        .info-rectangle {
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 90px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+        .info-rectangle h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: left;
+        }
+        .info-rectangle p {
+            margin: 5px 0 0 0;
+            font-size: 0.8rem;
+            color: #666;
+            text-align: left;
+            line-height: 1.2;
+        }
+        .info-rectangle .emoji {
+            font-size: 2.5rem;
+            padding-left: 10px;
+        }
+        .floating-cat {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.6;
+            animation: none;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform, opacity;
+        }
+        @keyframes floatCat {
+            0% {
+                opacity: 0.6;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(300px);
+            }
+        }
     </style>
 </head>
 <body>
     <div class="calculator">
-        <h1>🏠 D & K's Mortgage Calculator 🐈</h1>
-        
-        <div id="section1" class="section active">
-            <h2>Current Property Details</h2>
+        <div id="introPage" class="section active">
+            <h1>D & K's Mortgage Calculator</h1>
+            <div class="info-rectangle">
+                <div>
+                    <h3>Chudleigh Mill</h3>
+                    <p>Our apartment's selling price, remaining mortgage, and all associated fees for our sale.</p>
+                </div>
+                <div class="emoji">🦆</div>
+            </div>
+            <div class="info-rectangle">
+                <div>
+                    <h3>Additional Finances</h3>
+                    <p>Our joint savings, additional capital, and interest earned whilst living with Debbie & Willy.</p>
+                </div>
+                <div class="emoji">💰</div>
+            </div>
+            <div class="info-rectangle">
+                <div>
+                    <h3>Hubby House</h3>
+                    <p>The cost of our new property and any buying and moving related expenses.</p>
+                </div>
+                <div class="emoji">🏡</div>
+            </div>
+            <div class="info-rectangle">
+                <div>
+                    <h3>Loan Calculation</h3>
+                    <p>Calculate our required mortgage and estimated monthly repayment.</p>
+                </div>
+                <div class="emoji">📊</div>
+            </div>
+            <div class="button-group">
+                <div class="button-group-left">
+                    <div class="switch-container">
+                        <label class="switch">
+                            <input type="checkbox" id="catModeToggle" onclick="toggleCatMode()">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="cat-mode-label">🐈</span>
+                    </div>
+                </div>
+                <div class="spacer"></div>
+                <div class="button-group-right">
+                    <button class="start-button" onclick="startCalculator()">Start</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="section1" class="section">
+            <h2 class="h2">Current Property Details</h2>
             <div class="form-group">
                 <label for="currentProperty">Selling Price of Current Property (£):</label>
                 <input type="text" id="currentProperty" value="195,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
@@ -176,20 +341,29 @@
                 <input type="text" id="sellingFees" value="3,500" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="button-group">
-                <button style="visibility: hidden;">Hidden</button> <!-- Hidden button to maintain spacing -->
-                <button onclick="nextSection(1)">Next</button>
+                <div class="button-group-left">
+                    <button onclick="gotoIntro()">Previous</button>
+                </div>
+                <div class="spacer"></div>
+                <div class="button-group-right">
+                    <button onclick="nextSection(1)">Next</button>
+                </div>
             </div>
         </div>
 
         <div id="section2" class="section">
-            <h2>Additional Finances</h2>
+            <h2 class="h2">Additional Finances</h2>
             <div class="form-group">
-                <label for="savings">Savings (£):</label>
-                <input type="text" id="savings" value="20,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                <label for="jointSavings">Joint Savings (£):</label>
+                <input type="text" id="jointSavings" value="20,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
                 <label for="additionalCapital">Additional Capital (£):</label>
                 <input type="text" id="additionalCapital" value="0" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+            </div>
+            <div class="form-group">
+                <label for="currentTotalCapital">Current Total Capital (£):</label>
+                <input type="text" id="currentTotalCapital" readonly>
             </div>
             <div class="form-group">
                 <label for="monthsAtParents">Months at Kerry's Parents':</label>
@@ -199,7 +373,7 @@
                 <label for="savingsInterestRate">Savings Interest Rate (%):</label>
                 <div class="input-slider-group">
                     <input type="text" id="savingsInterestRate" value="3.5" oninput="formatInterestRate(this); updateSavingsInterestRateSlider(); updateCalculations(); handleInputChange()">
-                    <input type="range" id="savingsInterestRateSlider" min="0" max="10" step="0.1" value="0.5" oninput="updateSavingsInterestRate(); handleInputChange()">
+                    <input type="range" id="savingsInterestRateSlider" min="0" max="10" step="0.1" value="3.5" oninput="updateSavingsInterestRate(); handleInputChange()">
                 </div>
             </div>
             <div class="form-group">
@@ -207,13 +381,18 @@
                 <input type="text" id="newTotalCapital" readonly>
             </div>
             <div class="button-group">
-                <button onclick="previousSection(2)">Previous</button>
-                <button onclick="nextSection(2)">Next</button>
+                <div class="button-group-left">
+                    <button onclick="previousSection(2)">Previous</button>
+                </div>
+                <div class="spacer"></div>
+                <div class="button-group-right">
+                    <button onclick="nextSection(2)">Next</button>
+                </div>
             </div>
         </div>
 
         <div id="section3" class="section">
-            <h2>New Property Details</h2>
+            <h2 class="h2">New Property Details</h2>
             <div class="form-group">
                 <label for="newProperty">Price of New Property (£):</label>
                 <input type="text" id="newProperty" value="350,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
@@ -227,13 +406,18 @@
                 <input type="text" id="buyingFees" value="2,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="button-group">
-                <button onclick="previousSection(3)">Previous</button>
-                <button onclick="nextSection(3)">Next</button>
+                <div class="button-group-left">
+                    <button onclick="previousSection(3)">Previous</button>
+                </div>
+                <div class="spacer"></div>
+                <div class="button-group-right">
+                    <button onclick="nextSection(3)">Next</button>
+                </div>
             </div>
         </div>
 
         <div id="section4" class="section">
-            <h2>Loan Details and Results</h2>
+            <h2 class="h2">Loan Details and Results</h2>
             <div class="form-group">
                 <label for="loanTerm">Loan Term (Years):</label>
                 <input type="text" id="loanTerm" value="25" oninput="formatInteger(this); updateCalculations(); handleInputChange()">
@@ -253,14 +437,19 @@
                 <label for="capitalMinusStampDuty">Capital Minus Stamp Duty (£):</label>
                 <input type="text" id="capitalMinusStampDuty" readonly>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom: 10px;">
                 <label for="loanAmount">Loan Required (£):</label>
                 <input type="text" id="loanAmount" readonly>
             </div>
-            <div id="result"></div> <!-- Adjusted margin for the result element -->
+            <div id="result"></div>
             <div class="button-group">
-                <button onclick="previousSection(4)">Previous</button>
-                <button id="calculateButton" onclick="calculateMortgage()">Calculate</button>
+                <div class="button-group-left">
+                    <button onclick="previousSection(4)">Previous</button>
+                </div>
+                <div class="spacer"></div>
+                <div class="button-group-right">
+                    <button id="calculateButton" onclick="calculateMortgage()">Calculate</button>
+                </div>
             </div>
         </div>
 
@@ -270,6 +459,8 @@
     </div>
 
 <script>
+let catIntervalId;
+
 function formatNumber(num) {
     return num.toLocaleString('en-UK', { maximumFractionDigits: 0 });
 }
@@ -289,7 +480,7 @@ function formatInterestRate(input) {
     let value = input.value.replace(/,/g, '');
     if (!isNaN(value) && value !== '') {
         input.value = parseFloat(value).toFixed(2);
-        updateInterestRateSlider();  // Update the slider after manual input
+        updateInterestRateSlider();
     }
 }
 
@@ -319,16 +510,26 @@ function calculateStampDuty(newPropertyPrice) {
 function calculateNewTotalSavings() {
     const months = parseInt(document.getElementById('monthsAtParents').value) || 0;
     const savingsInterestRate = parseNumber(document.getElementById('savingsInterestRate').value) / 100 / 12;
-    const savings = parseNumber(document.getElementById('savings').value);
+    const jointSavings = parseNumber(document.getElementById('jointSavings').value);
     const currentProperty = parseNumber(document.getElementById('currentProperty').value);
     const remainingMortgage = parseNumber(document.getElementById('remainingMortgage').value);
     const sellingFees = parseNumber(document.getElementById('sellingFees').value);
     const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
 
-    const baseSavings = savings + (currentProperty - remainingMortgage - sellingFees);
-    const newTotalSavings = baseSavings * Math.pow(1 + savingsInterestRate, months) + additionalCapital;
+    const baseSavings = jointSavings + (currentProperty - remainingMortgage - sellingFees) + additionalCapital;
+    const newTotalSavings = baseSavings * Math.pow(1 + savingsInterestRate, months);
     
     return newTotalSavings;
+}
+
+function calculateCurrentTotalCapital() {
+    const jointSavings = parseNumber(document.getElementById('jointSavings').value);
+    const currentProperty = parseNumber(document.getElementById('currentProperty').value);
+    const remainingMortgage = parseNumber(document.getElementById('remainingMortgage').value);
+    const sellingFees = parseNumber(document.getElementById('sellingFees').value);
+    const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
+
+    return jointSavings + (currentProperty - remainingMortgage - sellingFees) + additionalCapital;
 }
 
 function calculateCapital() {
@@ -345,6 +546,7 @@ function updateCalculations() {
     const capitalMinusStampDuty = capital - stampDuty;
     const loanAmount = Math.max(newProperty - capitalMinusStampDuty, 0);
 
+    document.getElementById('currentTotalCapital').value = formatNumber(Math.max(calculateCurrentTotalCapital(), 0));
     document.getElementById('newTotalCapital').value = formatNumber(Math.max(calculateNewTotalSavings(), 0));
     document.getElementById('capitalBeforeStampDuty').value = formatNumber(Math.max(capital, 0));
     document.getElementById('stampDuty').value = formatNumber(stampDuty);
@@ -363,9 +565,10 @@ function calculateMortgage() {
     }
 
     const resultElement = document.getElementById('result');
-    resultElement.innerHTML = `Your monthly payment: £${formatNumber(Math.round(monthlyPayment))}`;
-    resultElement.classList.remove('pulse', 'fade-strike');
-    void resultElement.offsetWidth; // Trigger reflow
+    resultElement.classList.remove('pulse');
+    void resultElement.offsetWidth; // trigger reflow to restart animation
+    resultElement.innerHTML = `Monthly Mortgage Payment: <strong>£${formatNumber(Math.round(monthlyPayment))}</strong>`;
+    resultElement.classList.remove('fade-strike');
     resultElement.classList.add('pulse');
 }
 
@@ -409,29 +612,89 @@ function previousSection(currentSection) {
     updateCalculations();
 }
 
+function gotoIntro() {
+    document.getElementById('section1').classList.remove('active');
+    document.getElementById('introPage').classList.add('active');
+    document.querySelector('.progress').style.width = '25%';
+}
+
 function handleInputChange() {
     const resultElement = document.getElementById('result');
     resultElement.classList.add('fade-strike');
 }
 
-// Keyboard shortcuts for navigation
+function startCalculator() {
+    document.getElementById('introPage').classList.remove('active');
+    document.getElementById('section1').classList.add('active');
+    document.querySelector('.progress').style.width = '25%';
+}
+
+function toggleCatMode() {
+    const catToggle = document.getElementById('catModeToggle');
+
+    if (catToggle.checked) {
+        startCatMode();
+    } else {
+        stopCatMode();
+    }
+}
+
+function startCatMode() {
+    catIntervalId = setInterval(() => {
+        const catEmojis = ['🐈', '😺', '😹', '😻'];
+        const emoji = catEmojis[Math.floor(Math.random() * catEmojis.length)];
+
+        const floatingCat = document.createElement('div');
+        floatingCat.classList.add('floating-cat');
+        floatingCat.textContent = emoji;
+
+        const calculator = document.querySelector('.calculator');
+        calculator.appendChild(floatingCat);
+
+        const emojiWidth = 50; // Assuming the emoji width is roughly 50px
+        const maxLeftPosition = calculator.clientWidth - emojiWidth;
+        const randomX = Math.random() * maxLeftPosition;
+
+        floatingCat.style.left = `${randomX}px`;
+        floatingCat.style.top = '-50px'; // Start just above the visible area
+
+        floatingCat.animate([
+            { top: '10px', opacity: 0.6 }, // Move to the starting position inside the app
+            { top: '300px', opacity: 0 } // Move downward within the app
+        ], {
+            duration: 8000 + Math.random() * 2000,
+            easing: 'ease-in',
+            fill: 'forwards' // Ensure the final position is retained after the animation
+        });
+
+        setTimeout(() => {
+            floatingCat.remove();
+        }, 10000);
+    }, 3000 + Math.random() * 2000);
+}
+
+
+function stopCatMode() {
+    clearInterval(catIntervalId);
+    const floatingCats = document.querySelectorAll('.floating-cat');
+    floatingCats.forEach(cat => cat.remove());
+}
+
 document.addEventListener('keydown', function(event) {
     if (event.metaKey && event.key === 'ArrowLeft') {
-        // Navigate to previous section
         const activeSection = document.querySelector('.section.active');
         const currentSection = parseInt(activeSection.id.replace('section', ''));
         if (currentSection > 1) previousSection(currentSection);
     } else if (event.metaKey && event.key === 'ArrowRight') {
-        // Navigate to next section
         const activeSection = document.querySelector('.section.active');
         const currentSection = parseInt(activeSection.id.replace('section', ''));
         if (currentSection < 4) nextSection(currentSection);
     }
 });
 
-// Initialize calculations
 document.addEventListener('DOMContentLoaded', function() {
     updateCalculations();
+    updateSavingsInterestRateSlider();
 });
 </script>
 </body>

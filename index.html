@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,22 +6,22 @@
     <title>D & K's Mortgage Calculator</title>
     <style>
         body {
-    	    touch-action: none;
-    	    -ms-touch-action: none;
-    	    overflow-x: hidden;
+            touch-action: none;
+            -ms-touch-action: none;
+            overflow-x: hidden;
             font-family: Arial, sans-serif;
             background-color: #e6e6e6;
             margin: 0;
             padding: 0;
-    	    height: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
-	html, body {
-    		height: 100%;
-	}
+        html, body {
+            height: 100%;
+        }
         .calculator {
             background-color: #ffffff;
             max-width: 500px;
@@ -343,8 +343,12 @@
                 <input type="text" id="remainingMortgage" value="30,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
-                <label for="sellingFees">Selling Fees (£):</label>
-                <input type="text" id="sellingFees" value="3,500" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                <label for="estateAgentFees">Estate Agent Fees (£):</label>
+                <input type="text" id="estateAgentFees" value="2,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+            </div>
+            <div class="form-group">
+                <label for="solicitorsFees">Solicitors Fees (£):</label>
+                <input type="text" id="solicitorsFees" value="1,500" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="button-group">
                 <div class="button-group-left">
@@ -374,8 +378,8 @@
             <div class="form-group input-slider-group">
                 <label for="savingsInterestRate">Savings Interest Rate (%):</label>
                 <div class="input-slider-group">
-                    <input type="text" id="savingsInterestRate" value="3.5" oninput="formatInterestRate(this); updateSavingsInterestRateSlider(); updateCalculations(); handleInputChange()">
-                    <input type="range" id="savingsInterestRateSlider" min="0" max="10" step="0.1" value="3.5" oninput="updateSavingsInterestRate(); handleInputChange()">
+                    <input type="text" id="savingsInterestRate" value="3.50" oninput="formatInterestRate(this); updateSavingsInterestRateSlider(); updateCalculations(); handleInputChange()">
+                    <input type="range" id="savingsInterestRateSlider" min="0" max="10" step="0.1" value="3.50" oninput="updateSavingsInterestRate(); handleInputChange()">
                 </div>
             </div>
             <div class="form-group">
@@ -431,8 +435,8 @@
             <div class="form-group input-slider-group">
                 <label for="interestRate">Mortgage Interest Rate (%):</label>
                 <div class="input-slider-group">
-                    <input type="text" id="interestRate" value="4.5" oninput="formatInterestRate(this); updateInterestRateSlider(); updateCalculations(); handleInputChange()">
-                    <input type="range" id="interestRateSlider" min="0" max="10" step="0.1" value="4.5" oninput="updateInterestRate(); handleInputChange()">
+                    <input type="text" id="interestRate" value="4.50" oninput="formatInterestRate(this); updateInterestRateSlider(); updateCalculations(); handleInputChange()">
+                    <input type="range" id="interestRateSlider" min="0" max="10" step="0.1" value="4.50" oninput="updateInterestRate(); handleInputChange()">
                 </div>
             </div>
             <div class="form-group">
@@ -440,8 +444,8 @@
                 <input type="text" id="capitalBeforeStampDuty" readonly>
             </div>
             <div class="form-group">
-                <label for="capitalMinusStampDuty">Capital Minus Stamp Duty (£):</label>
-                <input type="text" id="capitalMinusStampDuty" readonly>
+                <label for="capitalAfterStampDuty">Capital After Stamp Duty (£):</label>
+                <input type="text" id="capitalAfterStampDuty" readonly>
             </div>
             <div class="form-group" style="margin-bottom: 10px;">
                 <label for="loanAmount">Loan Required (£):</label>
@@ -519,7 +523,9 @@ function calculateNewTotalSavings() {
     const jointSavings = parseNumber(document.getElementById('jointSavings').value);
     const currentProperty = parseNumber(document.getElementById('currentProperty').value);
     const remainingMortgage = parseNumber(document.getElementById('remainingMortgage').value);
-    const sellingFees = parseNumber(document.getElementById('sellingFees').value);
+    const estateAgentFees = parseNumber(document.getElementById('estateAgentFees').value);
+    const solicitorsFees = parseNumber(document.getElementById('solicitorsFees').value);
+    const sellingFees = estateAgentFees + solicitorsFees;
     const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
 
     const baseSavings = jointSavings + (currentProperty - remainingMortgage - sellingFees) + additionalCapital;
@@ -532,7 +538,9 @@ function calculateCurrentTotalCapital() {
     const jointSavings = parseNumber(document.getElementById('jointSavings').value);
     const currentProperty = parseNumber(document.getElementById('currentProperty').value);
     const remainingMortgage = parseNumber(document.getElementById('remainingMortgage').value);
-    const sellingFees = parseNumber(document.getElementById('sellingFees').value);
+    const estateAgentFees = parseNumber(document.getElementById('estateAgentFees').value);
+    const solicitorsFees = parseNumber(document.getElementById('solicitorsFees').value);
+    const sellingFees = estateAgentFees + solicitorsFees;
     const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
 
     return jointSavings + (currentProperty - remainingMortgage - sellingFees) + additionalCapital;
@@ -549,14 +557,14 @@ function updateCalculations() {
     const capital = calculateCapital();
     const newProperty = parseNumber(document.getElementById('newProperty').value);
     const stampDuty = calculateStampDuty(newProperty);
-    const capitalMinusStampDuty = capital - stampDuty;
-    const loanAmount = Math.max(newProperty - capitalMinusStampDuty, 0);
+    const capitalAfterStampDuty = capital - stampDuty;
+    const loanAmount = Math.max(newProperty - capitalAfterStampDuty, 0);
 
     document.getElementById('currentTotalCapital').value = formatNumber(Math.max(calculateCurrentTotalCapital(), 0));
     document.getElementById('newTotalCapital').value = formatNumber(Math.max(calculateNewTotalSavings(), 0));
     document.getElementById('capitalBeforeStampDuty').value = formatNumber(Math.max(capital, 0));
     document.getElementById('stampDuty').value = formatNumber(stampDuty);
-    document.getElementById('capitalMinusStampDuty').value = formatNumber(Math.max(capitalMinusStampDuty, 0));
+    document.getElementById('capitalAfterStampDuty').value = formatNumber(Math.max(capitalAfterStampDuty, 0));
     document.getElementById('loanAmount').value = formatNumber(loanAmount);
 }
 
@@ -699,8 +707,13 @@ document.addEventListener('keydown', function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Ensure two decimal places are displayed on load
+    document.getElementById('savingsInterestRate').value = parseFloat(document.getElementById('savingsInterestRate').value).toFixed(2);
+    document.getElementById('interestRate').value = parseFloat(document.getElementById('interestRate').value).toFixed(2);
+    
     updateCalculations();
     updateSavingsInterestRateSlider();
+    updateInterestRateSlider();
 });
 </script>
 </body>

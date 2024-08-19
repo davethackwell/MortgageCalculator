@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,12 +10,15 @@
             background-color: #e6e6e6;
             margin: 0;
             padding: 0;
-    	    min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    	    height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
+	html, body {
+    		height: 100%;
+	}
         .calculator {
             background-color: #ffffff;
             max-width: 500px;

@@ -104,7 +104,6 @@ input[readonly] {
     color: #000;
 }
 
-/* Input Pair - For aligning two input fields side by side */
 .input-pair {
     display: flex;
     width: 100%;
@@ -115,7 +114,6 @@ input[readonly] {
     width: 48%;
 }
 
-/* Input Slider Pair - For aligning an input field and a slider side by side */
 .input-slider-pair {
     display: flex;
     justify-content: space-between;
@@ -133,7 +131,6 @@ input[readonly] {
     box-sizing: border-box;
 }
 
-/* Global style for sliders */
 input[type="range"] {
     width: 100%;
 }
@@ -412,6 +409,10 @@ input:checked + .slider:before {
                 <label for="solicitorsFees">Solicitors Fees (£):</label>
                 <input type="text" id="solicitorsFees" value="1,500" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
+            <div class="form-group">
+                <label for="totalSellingFees">Total Selling Fees (£):</label>
+                <input type="text" id="totalSellingFees" readonly>
+            </div>
             <div class="button-group">
                 <div class="button-group-left">
                     <button onclick="gotoIntro()">Previous</button>
@@ -560,7 +561,6 @@ function formatInterestRate(input) {
     let value = input.value.replace(/,/g, '');
     if (!isNaN(value) && value !== '') {
         input.value = parseFloat(value).toFixed(2);
-        // Update corresponding slider to match the input
         const sliderId = input.id === 'savingsInterestRate' ? 'savingsInterestRateSlider' : 'interestRateSlider';
         document.getElementById(sliderId).value = parseFloat(input.value);
         updateCalculations();
@@ -641,6 +641,9 @@ function updateCalculations() {
     document.getElementById('stampDuty').value = formatNumber(stampDuty);
     document.getElementById('capitalAfterStampDuty').value = formatNumber(Math.max(capitalAfterStampDuty, 0));
     document.getElementById('loanAmount').value = formatNumber(loanAmount);
+
+    const sellingFees = parseNumber(document.getElementById('estateAgentFees').value) + parseNumber(document.getElementById('solicitorsFees').value);
+    document.getElementById('totalSellingFees').value = formatNumber(sellingFees);
 }
 
 function calculateMortgage() {
@@ -655,7 +658,7 @@ function calculateMortgage() {
 
     const resultElement = document.getElementById('result');
     resultElement.classList.remove('pulse');
-    void resultElement.offsetWidth; // trigger reflow to restart animation
+    void resultElement.offsetWidth;
     resultElement.innerHTML = `Monthly Mortgage Payment: <strong>£${formatNumber(Math.round(monthlyPayment))}</strong>`;
     resultElement.classList.remove('fade-strike');
     resultElement.classList.add('pulse');
@@ -740,20 +743,20 @@ function startCatMode() {
         const calculator = document.querySelector('.calculator');
         calculator.appendChild(floatingCat);
 
-        const emojiWidth = 50; // Assuming the emoji width is roughly 50px
+        const emojiWidth = 50;
         const maxLeftPosition = calculator.clientWidth - emojiWidth;
         const randomX = Math.random() * maxLeftPosition;
 
         floatingCat.style.left = `${randomX}px`;
-        floatingCat.style.top = '-50px'; // Start just above the visible area
+        floatingCat.style.top = '-50px';
 
         floatingCat.animate([
-            { top: '10px', opacity: 0.6 }, // Move to the starting position inside the app
-            { top: '300px', opacity: 0 } // Move downward within the app
+            { top: '10px', opacity: 0.6 },
+            { top: '300px', opacity: 0 }
         ], {
             duration: 8000 + Math.random() * 2000,
             easing: 'ease-in',
-            fill: 'forwards' // Ensure the final position is retained after the animation
+            fill: 'forwards'
         });
 
         setTimeout(() => {
@@ -781,7 +784,6 @@ document.addEventListener('keydown', function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Ensure two decimal places are displayed on load
     document.getElementById('savingsInterestRate').value = parseFloat(document.getElementById('savingsInterestRate').value).toFixed(2);
     document.getElementById('interestRate').value = parseFloat(document.getElementById('interestRate').value).toFixed(2);
     

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=no, user-scalable=no">
     <title>D & K's Mortgage Calculator</title>
     <style>
         body {
@@ -97,9 +97,13 @@
             width: 100%;
             justify-content: center;
         }
-        .input-slider-group input[type="text"] {
-            width: 50%;
-            margin-right: 10px;
+        .input-pair {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+        .input-pair > div {
+            width: 48%;
         }
         input[type="range"] {
             width: 50%;
@@ -375,7 +379,7 @@
                 <label for="currentTotalCapital">Current Total Capital (£):</label>
                 <input type="text" id="currentTotalCapital" readonly>
             </div>
-            <div class="form-group input-slider-group">
+            <div class="form-group">
                 <label for="savingsInterestRate">Savings Interest Rate (%):</label>
                 <div class="input-slider-group">
                     <input type="text" id="savingsInterestRate" value="3.50" onblur="formatInterestRate(this); updateSavingsInterestRateSlider(); updateCalculations(); handleInputChange()">
@@ -387,8 +391,16 @@
                 <input type="text" id="monthsAtParents" value="0" oninput="formatInteger(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
-                <label for="newTotalCapital">New Total Capital (£):</label>
-                <input type="text" id="newTotalCapital" readonly>
+                <div class="input-pair">
+                    <div>
+                        <label for="newTotalCapital">New Total Capital (£):</label>
+                        <input type="text" id="newTotalCapital" readonly>
+                    </div>
+                    <div>
+                        <label for="capitalIncrease">Capital Increase (£):</label>
+                        <input type="text" id="capitalIncrease" readonly>
+                    </div>
+                </div>
             </div>
             <div class="button-group">
                 <div class="button-group-left">
@@ -432,7 +444,7 @@
                 <label for="loanTerm">Loan Term (Years):</label>
                 <input type="text" id="loanTerm" value="25" oninput="formatInteger(this); updateCalculations(); handleInputChange()">
             </div>
-            <div class="form-group input-slider-group">
+            <div class="form-group">
                 <label for="interestRate">Mortgage Interest Rate (%):</label>
                 <div class="input-slider-group">
                     <input type="text" id="interestRate" value="4.50" onblur="formatInterestRate(this); updateInterestRateSlider(); updateCalculations(); handleInputChange()">
@@ -564,7 +576,9 @@ function updateCalculations() {
     const loanAmount = Math.max(newProperty - capitalAfterStampDuty, 0);
 
     document.getElementById('currentTotalCapital').value = formatNumber(Math.max(calculateCurrentTotalCapital(), 0));
-    document.getElementById('newTotalCapital').value = formatNumber(Math.max(calculateNewTotalSavings(), 0));
+    const newTotalCapital = Math.max(calculateNewTotalSavings(), 0);
+    document.getElementById('newTotalCapital').value = formatNumber(newTotalCapital);
+    document.getElementById('capitalIncrease').value = formatNumber(newTotalCapital - calculateCurrentTotalCapital());
     document.getElementById('capitalBeforeStampDuty').value = formatNumber(Math.max(capital, 0));
     document.getElementById('stampDuty').value = formatNumber(stampDuty);
     document.getElementById('capitalAfterStampDuty').value = formatNumber(Math.max(capitalAfterStampDuty, 0));

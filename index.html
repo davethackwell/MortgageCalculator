@@ -5,286 +5,344 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=no, user-scalable=no">
     <title>D & K's Mortgage Calculator</title>
     <style>
-        body {
-            touch-action: none;
-            -ms-touch-action: none;
-            overflow-x: hidden;
-            font-family: Arial, sans-serif;
-            background-color: #e6e6e6;
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        html, body {
-            height: 100%;
-        }
-        .calculator {
-            background-color: #ffffff;
-            max-width: 500px;
-            width: 100%;
-            margin: 20px;
-            border-radius: 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative;
-            height: 660px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
-            padding: 20px;
-        }
-        .section {
-            padding: 10px;
-            box-sizing: border-box;
-            display: none;
-            flex-direction: column;
-            justify-content: flex-start;
-            height: 100%;
-            width: 100%;
-            align-items: center;
-        }
-        .section.active {
-            display: flex;
-        }
-        h1, h2 {
-            font-size: 1.7rem;
-            text-align: center;
-            color: #4a4a4a;
-            margin: 0;
-            margin-top: 0px;
-            margin-bottom: 25px;
-        }
-        .h2 {
-            font-size: 1.4rem;
-        }
-        p {
-            font-size: 1rem;
-            margin-bottom: 20px;
-            color: #4a4a4a;
-            text-align: left;
-        }
-        .form-group {
-            margin-bottom: 15px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: left;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #4a4a4a;
-            text-align: left;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[readonly] {
-            background-color: #e0e0e0;
-            color: #000;
-        }
-        .input-slider-group {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-        }
-        .input-pair {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-        }
-        .input-pair > div {
-            width: 48%;
-        }
-        input[type="range"] {
-            width: 50%;
-        }
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-            width: 100%;
-            padding-top: 20px;
-            box-sizing: border-box;
-        }
-        .button-group-right, .button-group-left {
-            display: flex;
-            justify-content: center;
-            width: 48%;
-        }
-        .button-group .spacer {
-            width: 4%;
-        }
-        button {
-            padding: 8px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-            width: 100%;
-            height: 40px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        #calculateButton {
-            background-color: #FF9800;
-        }
-        #calculateButton:hover {
-            background-color: #FB8C00;
-        }
-        #result {
-            margin-top: 10px;
-            padding: 15px;
-            background-color: #e9f7ef;
-            border-radius: 5px;
-            text-align: center;
-            color: #4a4a4a;
-            width: 100%;
-            box-sizing: border-box;
-            min-height: 50px;
-            transition: opacity 0.3s ease, text-decoration 0.3s ease;
-        }
-        #result strong {
-            font-weight: bold;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 5px;
-            background-color: #ddd;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
-        .progress {
-            height: 100%;
-            background-color: #4CAF50;
-            transition: width 0.3s ease;
-        }
-        .fade-strike {
-            opacity: 0.6;
-            text-decoration: line-through;
-        }
-        .switch-container {
-            display: flex;
-            justify-content: flex-start;
-            width: 100%;
-        }
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: #4CAF50;
-        }
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-        .cat-mode-label {
-            font-size: 1.5rem;
-            margin-left: 10px;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        .pulse {
-            animation: pulse 0.5s;
-        }
-        .info-rectangle {
-            background-color: #f7f7f7;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            height: 90px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            margin-left: auto;
-            margin-right: auto;
-            box-sizing: border-box;
-        }
-        .info-rectangle h3 {
-            margin: 0;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: left;
-        }
-        .info-rectangle p {
-            margin: 5px 0 0 0;
-            font-size: 0.8rem;
-            color: #666;
-            text-align: left;
-            line-height: 1.2;
-        }
-        .info-rectangle .emoji {
-            font-size: 2.5rem;
-            padding-left: 10px;
-        }
-        .floating-cat {
-            position: absolute;
-            font-size: 3rem;
-            opacity: 0.6;
-            animation: none;
-            pointer-events: none;
-            z-index: 9999;
-            will-change: transform, opacity;
-        }
-        @keyframes floatCat {
-            0% {
-                opacity: 0.6;
-                transform: translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(300px);
-            }
-        }
+body {
+    touch-action: none;
+    -ms-touch-action: none;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #e6e6e6;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+html, body {
+    height: 100%;
+}
+
+.calculator {
+    background-color: #ffffff;
+    max-width: 500px;
+    width: 100%;
+    margin: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    height: 660px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.section {
+    padding: 10px;
+    box-sizing: border-box;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+.section.active {
+    display: flex;
+}
+
+h1, h2 {
+    font-size: 1.7rem;
+    text-align: center;
+    color: #4a4a4a;
+    margin: 0;
+    margin-top: 0px;
+    margin-bottom: 25px;
+}
+
+.h2 {
+    font-size: 1.4rem;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #4a4a4a;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #4a4a4a;
+    text-align: left;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[readonly] {
+    background-color: #e0e0e0;
+    color: #000;
+}
+
+/* Input Pair - For aligning two input fields side by side */
+.input-pair {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.input-pair > div {
+    width: 48%;
+}
+
+/* Input Slider Pair - For aligning an input field and a slider side by side */
+.input-slider-pair {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.input-slider-pair input[type="text"] {
+    width: 48%;
+    margin-right: 4%;
+    box-sizing: border-box;
+}
+
+.input-slider-pair input[type="range"] {
+    width: 48%;
+    box-sizing: border-box;
+}
+
+/* Global style for sliders */
+input[type="range"] {
+    width: 100%;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    width: 100%;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.button-group-right, .button-group-left {
+    display: flex;
+    justify-content: center;
+    width: 48%;
+}
+
+.button-group .spacer {
+    width: 4%;
+}
+
+button {
+    padding: 8px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%;
+    height: 40px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#calculateButton {
+    background-color: #FF9800;
+}
+
+#calculateButton:hover {
+    background-color: #FB8C00;
+}
+
+#result {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #e9f7ef;
+    border-radius: 5px;
+    text-align: center;
+    color: #4a4a4a;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 50px;
+    transition: opacity 0.3s ease, text-decoration 0.3s ease;
+}
+
+#result strong {
+    font-weight: bold;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 5px;
+    background-color: #ddd;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.progress {
+    height: 100%;
+    background-color: #4CAF50;
+    transition: width 0.3s ease;
+}
+
+.fade-strike {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.switch-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.cat-mode-label {
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 0.5s;
+}
+
+.info-rectangle {
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 90px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+.info-rectangle h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+.info-rectangle p {
+    margin: 5px 0 0 0;
+    font-size: 0.8rem;
+    color: #666;
+    text-align: left;
+    line-height: 1.2;
+}
+
+.info-rectangle .emoji {
+    font-size: 2.5rem;
+    padding-left: 10px;
+}
+
+.floating-cat {
+    position: absolute;
+    font-size: 3rem;
+    opacity: 0.6;
+    animation: none;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform, opacity;
+}
+
+@keyframes floatCat {
+    0% {
+        opacity: 0.6;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(300px);
+    }
+}
+
     </style>
 </head>
 <body>
@@ -379,13 +437,13 @@
                 <label for="currentTotalCapital">Current Total Capital (£):</label>
                 <input type="text" id="currentTotalCapital" readonly>
             </div>
-            <div class="form-group">
-                <label for="savingsInterestRate">Savings Interest Rate (%):</label>
-                <div class="input-slider-group">
-                    <input type="text" id="savingsInterestRate" value="3.50" onblur="formatInterestRate(this); updateSavingsInterestRateSlider(); updateCalculations(); handleInputChange()">
-                    <input type="range" id="savingsInterestRateSlider" min="0" max="10" step="0.1" value="3.50" oninput="updateSavingsInterestRate(); handleInputChange()">
-                </div>
-            </div>
+<div class="form-group">
+    <label for="savingsInterestRate">Savings Interest Rate (%):</label>
+    <div class="input-slider-pair">
+        <input type="text" id="savingsInterestRate" value="3.50" onblur="formatInterestRate(this); updateSavingsInterestRateSlider(); updateCalculations(); handleInputChange()">
+        <input type="range" id="savingsInterestRateSlider" min="0" max="10" step="0.1" value="3.50" oninput="updateSavingsInterestRate(); handleInputChange()">
+    </div>
+</div>
             <div class="form-group">
                 <label for="monthsAtParents">Months at Kerry's Parents':</label>
                 <input type="text" id="monthsAtParents" value="0" oninput="formatInteger(this); updateCalculations(); handleInputChange()">
@@ -444,13 +502,13 @@
                 <label for="loanTerm">Loan Term (Years):</label>
                 <input type="text" id="loanTerm" value="25" oninput="formatInteger(this); updateCalculations(); handleInputChange()">
             </div>
-            <div class="form-group">
-                <label for="interestRate">Mortgage Interest Rate (%):</label>
-                <div class="input-slider-group">
-                    <input type="text" id="interestRate" value="4.50" onblur="formatInterestRate(this); updateInterestRateSlider(); updateCalculations(); handleInputChange()">
-                    <input type="range" id="interestRateSlider" min="0" max="10" step="0.1" value="4.50" oninput="updateInterestRate(); handleInputChange()">
-                </div>
-            </div>
+<div class="form-group">
+    <label for="interestRate">Mortgage Interest Rate (%):</label>
+    <div class="input-slider-pair">
+        <input type="text" id="interestRate" value="4.50" onblur="formatInterestRate(this); updateInterestRateSlider(); updateCalculations(); handleInputChange()">
+        <input type="range" id="interestRateSlider" min="0" max="10" step="0.1" value="4.50" oninput="updateInterestRate(); handleInputChange()">
+    </div>
+</div>
             <div class="form-group">
                 <label for="capitalBeforeStampDuty">Capital Before Stamp Duty (£):</label>
                 <input type="text" id="capitalBeforeStampDuty" readonly>

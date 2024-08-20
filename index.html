@@ -417,15 +417,15 @@ input:checked + .slider:before {
             </div>
             <div class="form-group">
                 <label for="remainingMortgage">Remaining Mortgage (£):</label>
-                <input type="text" id="remainingMortgage" value="30,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                <input type="tel" id="remainingMortgage" value="30,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
                 <label for="estateAgentFees">Estate Agent Fees (£):</label>
-                <input type="text" id="estateAgentFees" value="2,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                <input type="tel" id="estateAgentFees" value="2,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
                 <label for="solicitorsFees">Solicitors Fees (£):</label>
-                <input type="text" id="solicitorsFees" value="1,500" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                <input type="tel" id="solicitorsFees" value="1,500" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
                 <label for="totalSellingFees">Total Selling Fees (£):</label>
@@ -447,11 +447,11 @@ input:checked + .slider:before {
             <p class="page-description">Enter our savings, additional capital, and interest rate information.</p>
             <div class="form-group">
                 <label for="jointSavings">Joint Savings (£):</label>
-                <input type="text" id="jointSavings" value="20,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                <input type="tel" id="jointSavings" value="20,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
                 <label for="additionalCapital">Additional Capital (£):</label>
-                <input type="text" id="additionalCapital" value="0" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                <input type="tel" id="additionalCapital" value="0" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
                 <label for="currentTotalCapital">Current Total Capital (£):</label>
@@ -460,13 +460,13 @@ input:checked + .slider:before {
             <div class="form-group">
                 <label for="savingsInterestRate">Savings Interest Rate (%):</label>
                 <div class="input-slider-pair">
-                    <input type="text" id="savingsInterestRate" value="3.50" onblur="formatInterestRate(this); updateSavingsInterestRateSlider(); updateCalculations(); handleInputChange()">
+                    <input type="tel" id="savingsInterestRate" value="3.50" onblur="formatInterestRate(this); updateSavingsInterestRateSlider(); updateCalculations(); handleInputChange()">
                     <input type="range" id="savingsInterestRateSlider" min="0" max="10" step="0.1" value="3.50" oninput="updateSavingsInterestRate(); handleInputChange()">
                 </div>
             </div>
             <div class="form-group">
                 <label for="monthsAtParents">Months at Kerry's Parents':</label>
-                <input type="text" id="monthsAtParents" value="0" oninput="formatInteger(this); updateCalculations(); handleInputChange()">
+                <input type="tel" id="monthsAtParents" value="0" oninput="formatInteger(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
                 <div class="input-pair">
@@ -496,7 +496,7 @@ input:checked + .slider:before {
             <p class="page-description">Specify the cost of our new Hubby House and related buying fees.</p>
             <div class="form-group">
                 <label for="newProperty">Price of New Property (£):</label>
-                <input type="text" id="newProperty" value="350,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                <input type="tel" id="newProperty" value="350,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
                 <label for="stampDuty">Stamp Duty (£):</label>
@@ -504,7 +504,7 @@ input:checked + .slider:before {
             </div>
             <div class="form-group">
                 <label for="buyingFees">Buying and Moving Fees (£):</label>
-                <input type="text" id="buyingFees" value="2,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                <input type="tel" id="buyingFees" value="2,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="button-group">
                 <div class="button-group-left">
@@ -522,12 +522,12 @@ input:checked + .slider:before {
             <p class="page-description">Review our loan term, interest rate, and calculate our mortgage repayment.</p>
             <div class="form-group">
                 <label for="loanTerm">Loan Term (Years):</label>
-                <input type="text" id="loanTerm" value="25" oninput="formatInteger(this); updateCalculations(); handleInputChange()">
+                <input type="tel" id="loanTerm" value="25" oninput="formatInteger(this); updateCalculations(); handleInputChange()">
             </div>
             <div class="form-group">
                 <label for="interestRate">Mortgage Interest Rate (%):</label>
                 <div class="input-slider-pair">
-                    <input type="text" id="interestRate" value="4.50" onblur="formatInterestRate(this); updateInterestRateSlider(); updateCalculations(); handleInputChange()">
+                    <input type="tel" id="interestRate" value="4.50" onblur="formatInterestRate(this); updateInterestRateSlider(); updateCalculations(); handleInputChange()">
                     <input type="range" id="interestRateSlider" min="0" max="10" step="0.1" value="4.50" oninput="updateInterestRate(); handleInputChange()">
                 </div>
             </div>

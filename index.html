@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=no, user-scalable=no">
@@ -10,353 +11,361 @@
     <title>D & K's Mortgage Calculator</title>
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <style>
+        body {
+            touch-action: none;
+            -ms-touch-action: none;
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #e6e6e6;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: top;
+            overflow: hidden;
+        }
 
-body {
-    touch-action: none;
-    -ms-touch-action: none;
-    overflow-x: hidden;
-    font-family: Arial, sans-serif;
-    background-color: #e6e6e6;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: top;
-    overflow: hidden;
-}
+        html,
+        body {
+            height: 100%;
+        }
 
-html, body {
-    height: 100%;
-}
+        .calculator {
+            background-color: #ffffff;
+            max-width: 500px;
+            width: 100%;
+            margin-top: 50px;
+            margin-left: 20px;
+            margin-right: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            height: 770px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 20px;
+        }
 
-.calculator {
-    background-color: #ffffff;
-    max-width: 500px;
-    width: 100%;
-    margin-top: 40px;
-    margin-left: 20px;
-    margin-right: 20px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    position: relative;
-    height: 770px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 20px;
-}
+        .section {
+            padding: 10px;
+            box-sizing: border-box;
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+            width: 100%;
+            align-items: center;
+        }
 
-.section {
-    padding: 10px;
-    box-sizing: border-box;
-    display: none;
-    flex-direction: column;
-    justify-content: flex-start;
-    height: 100%;
-    width: 100%;
-    align-items: center;
-}
+        .section.active {
+            display: flex;
+        }
 
-.section.active {
-    display: flex;
-}
+        h1,
+        h2 {
+            font-size: 1.7rem;
+            text-align: center;
+            color: #4a4a4a;
+            margin: 0;
+            margin-top: 0px;
+            margin-bottom: 25px;
+        }
 
-h1, h2 {
-    font-size: 1.7rem;
-    text-align: center;
-    color: #4a4a4a;
-    margin: 0;
-    margin-top: 0px;
-    margin-bottom: 25px;
-}
+        .h2 {
+            font-size: 1.4rem;
+        }
 
-.h2 {
-    font-size: 1.4rem;
-}
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #4a4a4a;
+            text-align: left;
+        }
 
-p {
-    font-size: 1rem;
-    margin-bottom: 20px;
-    color: #4a4a4a;
-    text-align: left;
-}
+        .page-description {
+            font-size: 1rem;
+            color: #666;
+            text-align: center;
+            margin-top: -15px;
+            margin-bottom: 30px;
+        }
 
-.page-description {
-    font-size: 1rem;
-    color: #666;
-    text-align: center;
-    margin-top: -15px;
-    margin-bottom: 30px;
-}
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+        }
 
-.form-group {
-    margin-bottom: 15px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-}
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4a4a4a;
+            text-align: left;
+        }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #4a4a4a;
-    text-align: left;
-}
+        input[type="text"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
 
-input[type="text"], input[type="tel"] {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
+        input[readonly] {
+            background-color: #e0e0e0;
+            color: #000;
+        }
 
-input[readonly] {
-    background-color: #e0e0e0;
-    color: #000;
-}
+        .input-pair {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
 
-.input-pair {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-}
+        .input-pair>div {
+            width: 48%;
+        }
 
-.input-pair > div {
-    width: 48%;
-}
+        .input-slider-pair {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
 
-.input-slider-pair {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
+        .input-slider-pair input[type="tel"],
+        .input-slider-pair input[type="range"] {
+            width: 48%;
+            box-sizing: border-box;
+        }
 
-.input-slider-pair input[type="tel"] {
-    width: 48%;
-    box-sizing: border-box;
-}
+        input[type="range"] {
+            width: 100%;
+        }
 
-.input-slider-pair input[type="range"] {
-    width: 48%;
-    box-sizing: border-box;
-}
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            width: 100%;
+            padding-top: 20px;
+            box-sizing: border-box;
+        }
 
-input[type="range"] {
-    width: 100%;
-}
+        .button-group-right,
+        .button-group-left {
+            display: flex;
+            justify-content: center;
+            width: 48%;
+        }
 
-.button-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-    width: 100%;
-    padding-top: 20px;
-    box-sizing: border-box;
-}
+        .button-group .spacer {
+            width: 4%;
+        }
 
-.button-group-right, .button-group-left {
-    display: flex;
-    justify-content: center;
-    width: 48%;
-}
+        button {
+            padding: 8px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%;
+            height: 40px;
+        }
 
-.button-group .spacer {
-    width: 4%;
-}
+        button:hover {
+            background-color: #45a049;
+        }
 
-button {
-    padding: 8px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    width: 100%;
-    height: 40px;
-}
+        #calculateButton {
+            background-color: #FF9800;
+        }
 
-button:hover {
-    background-color: #45a049;
-}
+        #calculateButton:hover {
+            background-color: #FB8C00;
+        }
 
-#calculateButton {
-    background-color: #FF9800;
-}
+        #result {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-radius: 5px;
+            text-align: center;
+            color: #4a4a4a;
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 50px;
+            transition: opacity 0.3s ease, text-decoration 0.3s ease;
+        }
 
-#calculateButton:hover {
-    background-color: #FB8C00;
-}
+        #result strong {
+            font-weight: bold;
+        }
 
-#result {
-    margin-top: 10px;
-    padding: 15px;
-    background-color: #e9f7ef;
-    border-radius: 5px;
-    text-align: center;
-    color: #4a4a4a;
-    width: 100%;
-    box-sizing: border-box;
-    min-height: 50px;
-    transition: opacity 0.3s ease, text-decoration 0.3s ease;
-}
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background-color: #ddd;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
 
-#result strong {
-    font-weight: bold;
-}
+        .progress {
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 0.3s ease;
+        }
 
-.progress-bar {
-    width: 100%;
-    height: 5px;
-    background-color: #ddd;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
+        .fade-strike {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
 
-.progress {
-    height: 100%;
-    background-color: #4CAF50;
-    transition: width 0.3s ease;
-}
+        .switch-container {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+        }
 
-.fade-strike {
-    opacity: 0.6;
-    text-decoration: line-through;
-}
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
 
-.switch-container {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-}
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
 
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
 
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px;
-}
+        input:checked+.slider {
+            background-color: #4CAF50;
+        }
 
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
 
-input:checked + .slider {
-    background-color: #4CAF50;
-}
+        .cat-mode-label {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
 
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
 
-.cat-mode-label {
-    font-size: 1.5rem;
-    margin-left: 10px;
-}
+            50% {
+                transform: scale(1.05);
+            }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
+            100% {
+                transform: scale(1);
+            }
+        }
 
-.pulse {
-    animation: pulse 0.5s;
-}
+        .pulse {
+            animation: pulse 0.5s;
+        }
 
-.info-rectangle {
-    background-color: #f7f7f7;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 100px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    margin-left: auto;
-    margin-right: auto;
-    box-sizing: border-box;
-}
+        .info-rectangle {
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 100px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
 
-.info-rectangle h3 {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-align: left;
-}
+        .info-rectangle h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: left;
+        }
 
-.info-rectangle p {
-    margin: 5px 0 0 0;
-    font-size: 0.8rem;
-    color: #666;
-    text-align: left;
-    line-height: 1.2;
-}
+        .info-rectangle p {
+            margin: 5px 0 0 0;
+            font-size: 0.8rem;
+            color: #666;
+            text-align: left;
+            line-height: 1.2;
+        }
 
-.info-rectangle .emoji {
-    font-size: 2.5rem;
-    padding-left: 10px;
-}
+        .info-rectangle .emoji {
+            font-size: 2.5rem;
+            padding-left: 10px;
+        }
 
-.floating-cat {
-    position: absolute;
-    font-size: 3rem;
-    opacity: 0.6;
-    animation: none;
-    pointer-events: none;
-    z-index: 9999;
-    will-change: transform, opacity;
-}
+        .floating-cat {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.6;
+            animation: none;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform, opacity;
+        }
 
-@keyframes floatCat {
-    0% {
-        opacity: 0.6;
-        transform: translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(300px);
-    }
-}
+        @keyframes floatCat {
+            0% {
+                opacity: 0.6;
+                transform: translateY(0);
+            }
 
+            100% {
+                opacity: 0;
+                transform: translateY(300px);
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="calculator">
         <div id="introPage" class="section active">
@@ -538,9 +547,14 @@ input:checked + .slider:before {
                 <label for="capitalAfterStampDuty">Capital After Stamp Duty (£):</label>
                 <input type="text" id="capitalAfterStampDuty" readonly>
             </div>
-            <div class="form-group" style="margin-bottom: 10px;">
+            <div class="form-group">
                 <label for="loanAmount">Loan Required (£):</label>
                 <input type="text" id="loanAmount" readonly>
+            </div>
+            <!-- New LTV Ratio Field -->
+            <div class="form-group">
+                <label for="ltvRatio">Loan-to-Value Ratio (%):</label>
+                <input type="text" id="ltvRatio" readonly>
             </div>
             <div id="result"></div>
             <div class="button-group">
@@ -559,258 +573,266 @@ input:checked + .slider:before {
         </div>
     </div>
 
-<script>
-let catIntervalId;
+    <script>
+        let catIntervalId;
 
-function formatNumber(num) {
-    return num.toLocaleString('en-UK', { maximumFractionDigits: 0 });
-}
+        function formatNumber(num) {
+            return num.toLocaleString('en-UK', { maximumFractionDigits: 0 });
+        }
 
-function parseNumber(numString) {
-    return parseFloat(numString.replace(/,/g, '')) || 0;
-}
+        function parseNumber(numString) {
+            return parseFloat(numString.replace(/,/g, '')) || 0;
+        }
 
-function formatInput(input) {
-    let value = input.value.replace(/,/g, '');
-    if (!isNaN(value) && value !== '') {
-        input.value = formatNumber(parseFloat(value));
-    }
-}
+        function formatInput(input) {
+            let value = input.value.replace(/,/g, '');
+            if (!isNaN(value) && value !== '') {
+                input.value = formatNumber(parseFloat(value));
+            }
+        }
 
-function formatInterestRate(input) {
-    let value = input.value.replace(/,/g, '');
-    if (!isNaN(value) && value !== '') {
-        input.value = parseFloat(value).toFixed(2);
-        const sliderId = input.id === 'savingsInterestRate' ? 'savingsInterestRateSlider' : 'interestRateSlider';
-        document.getElementById(sliderId).value = parseFloat(input.value);
-        updateCalculations();
-    }
-}
+        function formatInterestRate(input) {
+            let value = input.value.replace(/,/g, '');
+            if (!isNaN(value) && value !== '') {
+                input.value = parseFloat(value).toFixed(2);
+                const sliderId = input.id === 'savingsInterestRate' ? 'savingsInterestRateSlider' : 'interestRateSlider';
+                document.getElementById(sliderId).value = parseFloat(input.value);
+                updateCalculations();
+            }
+        }
 
-function formatInteger(input) {
-    let value = input.value.replace(/,/g, '');
-    if (!isNaN(value) && value !== '') {
-        input.value = parseInt(value);
-    }
-}
+        function formatInteger(input) {
+            let value = input.value.replace(/,/g, '');
+            if (!isNaN(value) && value !== '') {
+                input.value = parseInt(value);
+            }
+        }
 
-function calculateStampDuty(newPropertyPrice) {
-    let stampDuty = 0;
+        function calculateStampDuty(newPropertyPrice) {
+            let stampDuty = 0;
 
-    if (newPropertyPrice <= 250000) {
-        stampDuty = 0;
-    } else if (newPropertyPrice <= 925000) {
-        stampDuty = (newPropertyPrice - 250000) * 0.05;
-    } else if (newPropertyPrice <= 1500000) {
-        stampDuty = 33750 + (newPropertyPrice - 925000) * 0.10;
-    } else {
-        stampDuty = 91250 + (newPropertyPrice - 1500000) * 0.12;
-    }
+            if (newPropertyPrice <= 250000) {
+                stampDuty = 0;
+            } else if (newPropertyPrice <= 925000) {
+                stampDuty = (newPropertyPrice - 250000) * 0.05;
+            } else if (newPropertyPrice <= 1500000) {
+                stampDuty = 33750 + (newPropertyPrice - 925000) * 0.10;
+            } else {
+                stampDuty = 91250 + (newPropertyPrice - 1500000) * 0.12;
+            }
 
-    return Math.round(stampDuty);
-}
+            return Math.round(stampDuty);
+        }
 
-function calculateNewTotalSavings() {
-    const months = parseInt(document.getElementById('monthsAtParents').value) || 0;
-    const savingsInterestRate = parseNumber(document.getElementById('savingsInterestRate').value) / 100 / 12;
-    const jointSavings = parseNumber(document.getElementById('jointSavings').value);
-    const currentProperty = parseNumber(document.getElementById('currentProperty').value);
-    const remainingMortgage = parseNumber(document.getElementById('remainingMortgage').value);
-    const estateAgentFees = parseNumber(document.getElementById('estateAgentFees').value);
-    const solicitorsFees = parseNumber(document.getElementById('solicitorsFees').value);
-    const sellingFees = estateAgentFees + solicitorsFees;
-    const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
+        function calculateNewTotalSavings() {
+            const months = parseInt(document.getElementById('monthsAtParents').value) || 0;
+            const savingsInterestRate = parseNumber(document.getElementById('savingsInterestRate').value) / 100 / 12;
+            const jointSavings = parseNumber(document.getElementById('jointSavings').value);
+            const currentProperty = parseNumber(document.getElementById('currentProperty').value);
+            const remainingMortgage = parseNumber(document.getElementById('remainingMortgage').value);
+            const estateAgentFees = parseNumber(document.getElementById('estateAgentFees').value);
+            const solicitorsFees = parseNumber(document.getElementById('solicitorsFees').value);
+            const sellingFees = estateAgentFees + solicitorsFees;
+            const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
 
-    const baseSavings = jointSavings + (currentProperty - remainingMortgage - sellingFees) + additionalCapital;
-    const newTotalSavings = baseSavings * Math.pow(1 + savingsInterestRate, months);
-    
-    return newTotalSavings;
-}
+            const baseSavings = jointSavings + (currentProperty - remainingMortgage - sellingFees) + additionalCapital;
+            const newTotalSavings = baseSavings * Math.pow(1 + savingsInterestRate, months);
 
-function calculateCurrentTotalCapital() {
-    const jointSavings = parseNumber(document.getElementById('jointSavings').value);
-    const currentProperty = parseNumber(document.getElementById('currentProperty').value);
-    const remainingMortgage = parseNumber(document.getElementById('remainingMortgage').value);
-    const estateAgentFees = parseNumber(document.getElementById('estateAgentFees').value);
-    const solicitorsFees = parseNumber(document.getElementById('solicitorsFees').value);
-    const sellingFees = estateAgentFees + solicitorsFees;
-    const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
+            return newTotalSavings;
+        }
 
-    return jointSavings + (currentProperty - remainingMortgage - sellingFees) + additionalCapital;
-}
+        function calculateCurrentTotalCapital() {
+            const jointSavings = parseNumber(document.getElementById('jointSavings').value);
+            const currentProperty = parseNumber(document.getElementById('currentProperty').value);
+            const remainingMortgage = parseNumber(document.getElementById('remainingMortgage').value);
+            const estateAgentFees = parseNumber(document.getElementById('estateAgentFees').value);
+            const solicitorsFees = parseNumber(document.getElementById('solicitorsFees').value);
+            const sellingFees = estateAgentFees + solicitorsFees;
+            const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
 
-function calculateCapital() {
-    const newTotalSavings = calculateNewTotalSavings();
-    const buyingFees = parseNumber(document.getElementById('buyingFees').value);
-    
-    return newTotalSavings - buyingFees;
-}
+            return jointSavings + (currentProperty - remainingMortgage - sellingFees) + additionalCapital;
+        }
 
-function updateCalculations() {
-    const capital = calculateCapital();
-    const newProperty = parseNumber(document.getElementById('newProperty').value);
-    const stampDuty = calculateStampDuty(newProperty);
-    const capitalAfterStampDuty = capital - stampDuty;
-    const loanAmount = Math.max(newProperty - capitalAfterStampDuty, 0);
+        function calculateCapital() {
+            const newTotalSavings = calculateNewTotalSavings();
+            const buyingFees = parseNumber(document.getElementById('buyingFees').value);
 
-    document.getElementById('currentTotalCapital').value = formatNumber(Math.max(calculateCurrentTotalCapital(), 0));
-    const newTotalCapital = Math.max(calculateNewTotalSavings(), 0);
-    document.getElementById('newTotalCapital').value = formatNumber(newTotalCapital);
-    document.getElementById('capitalIncrease').value = formatNumber(newTotalCapital - calculateCurrentTotalCapital());
-    document.getElementById('capitalBeforeStampDuty').value = formatNumber(Math.max(capital, 0));
-    document.getElementById('stampDuty').value = formatNumber(stampDuty);
-    document.getElementById('capitalAfterStampDuty').value = formatNumber(Math.max(capitalAfterStampDuty, 0));
-    document.getElementById('loanAmount').value = formatNumber(loanAmount);
+            return newTotalSavings - buyingFees;
+        }
 
-    const sellingFees = parseNumber(document.getElementById('estateAgentFees').value) + parseNumber(document.getElementById('solicitorsFees').value);
-    document.getElementById('totalSellingFees').value = formatNumber(sellingFees);
-}
+        function updateCalculations() {
+            const capital = calculateCapital();
+            const newProperty = parseNumber(document.getElementById('newProperty').value);
+            const stampDuty = calculateStampDuty(newProperty);
+            const capitalAfterStampDuty = capital - stampDuty;
+            const loanAmount = Math.max(newProperty - capitalAfterStampDuty, 0);
 
-function calculateMortgage() {
-    const loanAmount = parseNumber(document.getElementById('loanAmount').value);
-    const interestRate = parseNumber(document.getElementById('interestRate').value) / 100 / 12;
-    const loanTerm = parseInt(document.getElementById('loanTerm').value) * 12;
+            document.getElementById('currentTotalCapital').value = formatNumber(Math.max(calculateCurrentTotalCapital(), 0));
+            const newTotalCapital = Math.max(calculateNewTotalSavings(), 0);
+            document.getElementById('newTotalCapital').value = formatNumber(newTotalCapital);
+            document.getElementById('capitalIncrease').value = formatNumber(newTotalCapital - calculateCurrentTotalCapital());
+            document.getElementById('capitalBeforeStampDuty').value = formatNumber(Math.max(capital, 0));
+            document.getElementById('stampDuty').value = formatNumber(stampDuty);
+            document.getElementById('capitalAfterStampDuty').value = formatNumber(Math.max(capitalAfterStampDuty, 0));
+            document.getElementById('loanAmount').value = formatNumber(loanAmount);
 
-    let monthlyPayment = 0;
-    if (loanAmount > 0 && interestRate > 0 && loanTerm > 0) {
-        monthlyPayment = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) / (Math.pow(1 + interestRate, loanTerm) - 1);
-    }
+            const sellingFees = parseNumber(document.getElementById('estateAgentFees').value) + parseNumber(document.getElementById('solicitorsFees').value);
+            document.getElementById('totalSellingFees').value = formatNumber(sellingFees);
 
-    const resultElement = document.getElementById('result');
-    resultElement.classList.remove('pulse');
-    void resultElement.offsetWidth;
-    resultElement.innerHTML = `Monthly Mortgage Payment: <strong>£${formatNumber(Math.round(monthlyPayment))}</strong>`;
-    resultElement.classList.remove('fade-strike');
-    resultElement.classList.add('pulse');
-}
+            // New LTV Ratio calculation
+            const ltvRatio = ((loanAmount / newProperty) * 100).toFixed(2);
+            document.getElementById('ltvRatio').value = ltvRatio + '%';
+        }
 
-function updateInterestRate() {
-    const slider = document.getElementById('interestRateSlider');
-    const input = document.getElementById('interestRate');
-    input.value = parseFloat(slider.value).toFixed(2);
-    updateCalculations();
-}
+        function calculateMortgage() {
+            const loanAmount = parseNumber(document.getElementById('loanAmount').value);
+            const interestRate = parseNumber(document.getElementById('interestRate').value) / 100 / 12;
+            const loanTerm = parseInt(document.getElementById('loanTerm').value) * 12;
 
-function updateInterestRateSlider() {
-    const slider = document.getElementById('interestRateSlider');
-    const input = document.getElementById('interestRate');
-    slider.value = parseFloat(input.value);
-}
+            let monthlyPayment = 0;
+            if (loanAmount > 0 && interestRate > 0 && loanTerm > 0) {
+                monthlyPayment = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) / (Math.pow(1 + interestRate, loanTerm) - 1);
+            }
 
-function updateSavingsInterestRate() {
-    const slider = document.getElementById('savingsInterestRateSlider');
-    const input = document.getElementById('savingsInterestRate');
-    input.value = parseFloat(slider.value).toFixed(2);
-    updateCalculations();
-}
+            const resultElement = document.getElementById('result');
+            resultElement.classList.remove('pulse');
+            void resultElement.offsetWidth;
+            resultElement.innerHTML = `Monthly Mortgage Payment: <strong>£${formatNumber(Math.round(monthlyPayment))}</strong>`;
+            resultElement.classList.remove('fade-strike');
+            resultElement.classList.add('pulse');
+        }
 
-function updateSavingsInterestRateSlider() {
-    const slider = document.getElementById('savingsInterestRateSlider');
-    const input = document.getElementById('savingsInterestRate');
-    slider.value = parseFloat(input.value);
-}
+        function updateInterestRate() {
+            const slider = document.getElementById('interestRateSlider');
+            const input = document.getElementById('interestRate');
+            input.value = parseFloat(slider.value).toFixed(2);
+            updateCalculations();
+        }
 
-function nextSection(currentSection) {
-    document.getElementById(`section${currentSection}`).classList.remove('active');
-    document.getElementById(`section${currentSection + 1}`).classList.add('active');
-    document.querySelector('.progress').style.width = `${25 * (currentSection + 1)}%`;
-    updateCalculations();
-}
+        function updateInterestRateSlider() {
+            const slider = document.getElementById('interestRateSlider');
+            const input = document.getElementById('interestRate');
+            slider.value = parseFloat(input.value);
+        }
 
-function previousSection(currentSection) {
-    document.getElementById(`section${currentSection}`).classList.remove('active');
-    document.getElementById(`section${currentSection - 1}`).classList.add('active');
-    document.querySelector('.progress').style.width = `${25 * (currentSection - 1)}%`;
-    updateCalculations();
-}
+        function updateSavingsInterestRate() {
+            const slider = document.getElementById('savingsInterestRateSlider');
+            const input = document.getElementById('savingsInterestRate');
+            input.value = parseFloat(slider.value).toFixed(2);
+            updateCalculations();
+        }
 
-function gotoIntro() {
-    document.getElementById('section1').classList.remove('active');
-    document.getElementById('introPage').classList.add('active');
-    document.querySelector('.progress').style.width = '25%';
-}
+        function updateSavingsInterestRateSlider() {
+            const slider = document.getElementById('savingsInterestRateSlider');
+            const input = document.getElementById('savingsInterestRate');
+            slider.value = parseFloat(input.value);
+        }
 
-function handleInputChange() {
-    const resultElement = document.getElementById('result');
-    resultElement.classList.add('fade-strike');
-}
+        function nextSection(currentSection) {
+            document.getElementById(`section${currentSection}`).classList.remove('active');
+            document.getElementById(`section${currentSection + 1}`).classList.add('active');
+            document.querySelector('.progress').style.width = `${25 * (currentSection + 1)}%`;
+            updateCalculations();
+        }
 
-function startCalculator() {
-    document.getElementById('introPage').classList.remove('active');
-    document.getElementById('section1').classList.add('active');
-    document.querySelector('.progress').style.width = '25%';
-}
+        function previousSection(currentSection) {
+            document.getElementById(`section${currentSection}`).classList.remove('active');
+            document.getElementById(`section${currentSection - 1}`).classList.add('active');
+            document.querySelector('.progress').style.width = `${25 * (currentSection - 1)}%`;
+            updateCalculations();
+        }
 
-function toggleCatMode() {
-    const catToggle = document.getElementById('catModeToggle');
+        function gotoIntro() {
+            document.getElementById('section1').classList.remove('active');
+            document.getElementById('introPage').classList.add('active');
+            document.querySelector('.progress').style.width = '25%';
+        }
 
-    if (catToggle.checked) {
-        startCatMode();
-    } else {
-        stopCatMode();
-    }
-}
+        function handleInputChange() {
+            const resultElement = document.getElementById('result');
+            resultElement.classList.add('fade-strike');
+        }
 
-function startCatMode() {
-    catIntervalId = setInterval(() => {
-        const catEmojis = ['🐈', '😺', '😹', '😻'];
-        const emoji = catEmojis[Math.floor(Math.random() * catEmojis.length)];
+        function startCalculator() {
+            document.getElementById('introPage').classList.remove('active');
+            document.getElementById('section1').classList.add('active');
+            document.querySelector('.progress').style.width = '25%';
+        }
 
-        const floatingCat = document.createElement('div');
-        floatingCat.classList.add('floating-cat');
-        floatingCat.textContent = emoji;
+        function toggleCatMode() {
+            const catToggle = document.getElementById('catModeToggle');
 
-        const calculator = document.querySelector('.calculator');
-        calculator.appendChild(floatingCat);
+            if (catToggle.checked) {
+                startCatMode();
+            } else {
+                stopCatMode();
+            }
+        }
 
-        const emojiWidth = 50;
-        const maxLeftPosition = calculator.clientWidth - emojiWidth;
-        const randomX = Math.random() * maxLeftPosition;
+        function startCatMode() {
+            catIntervalId = setInterval(() => {
+                const catEmojis = ['🐈', '😺', '😹', '😻'];
+                const emoji = catEmojis[Math.floor(Math.random() * catEmojis.length)];
 
-        floatingCat.style.left = `${randomX}px`;
-        floatingCat.style.top = '-50px';
+                const floatingCat = document.createElement('div');
+                floatingCat.classList.add('floating-cat');
+                floatingCat.textContent = emoji;
 
-        floatingCat.animate([
-            { top: '10px', opacity: 0.6 },
-            { top: '300px', opacity: 0 }
-        ], {
-            duration: 8000 + Math.random() * 2000,
-            easing: 'ease-in',
-            fill: 'forwards'
+                const calculator = document.querySelector('.calculator');
+                calculator.appendChild(floatingCat);
+
+                const emojiWidth = 50;
+                const maxLeftPosition = calculator.clientWidth - emojiWidth;
+                const randomX = Math.random() * maxLeftPosition;
+
+                floatingCat.style.left = `${randomX}px`;
+                floatingCat.style.top = '-50px';
+
+                floatingCat.animate([{
+                    top: '10px',
+                    opacity: 0.6
+                }, {
+                    top: '300px',
+                    opacity: 0
+                }], {
+                    duration: 8000 + Math.random() * 2000,
+                    easing: 'ease-in',
+                    fill: 'forwards'
+                });
+
+                setTimeout(() => {
+                    floatingCat.remove();
+                }, 10000);
+            }, 3000 + Math.random() * 2000);
+        }
+
+        function stopCatMode() {
+            clearInterval(catIntervalId);
+            const floatingCats = document.querySelectorAll('.floating-cat');
+            floatingCats.forEach(cat => cat.remove());
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.metaKey && event.key === 'ArrowLeft') {
+                const activeSection = document.querySelector('.section.active');
+                const currentSection = parseInt(activeSection.id.replace('section', ''));
+                if (currentSection > 1) previousSection(currentSection);
+            } else if (event.metaKey && event.key === 'ArrowRight') {
+                const activeSection = document.querySelector('.section.active');
+                const currentSection = parseInt(activeSection.id.replace('section', ''));
+                if (currentSection < 4) nextSection(currentSection);
+            }
         });
 
-        setTimeout(() => {
-            floatingCat.remove();
-        }, 10000);
-    }, 3000 + Math.random() * 2000);
-}
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('savingsInterestRate').value = parseFloat(document.getElementById('savingsInterestRate').value).toFixed(2);
+            document.getElementById('interestRate').value = parseFloat(document.getElementById('interestRate').value).toFixed(2);
 
-function stopCatMode() {
-    clearInterval(catIntervalId);
-    const floatingCats = document.querySelectorAll('.floating-cat');
-    floatingCats.forEach(cat => cat.remove());
-}
-	
-document.addEventListener('keydown', function(event) {
-    if (event.metaKey && event.key === 'ArrowLeft') {
-        const activeSection = document.querySelector('.section.active');
-        const currentSection = parseInt(activeSection.id.replace('section', ''));
-        if (currentSection > 1) previousSection(currentSection);
-    } else if (event.metaKey && event.key === 'ArrowRight') {
-        const activeSection = document.querySelector('.section.active');
-        const currentSection = parseInt(activeSection.id.replace('section', ''));
-        if (currentSection < 4) nextSection(currentSection);
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('savingsInterestRate').value = parseFloat(document.getElementById('savingsInterestRate').value).toFixed(2);
-    document.getElementById('interestRate').value = parseFloat(document.getElementById('interestRate').value).toFixed(2);
-    
-    updateCalculations();
-    updateSavingsInterestRateSlider();
-    updateInterestRateSlider();
-});
-</script>
+            updateCalculations();
+            updateSavingsInterestRateSlider();
+            updateInterestRateSlider();
+        });
+    </script>
 </body>
+
 </html>

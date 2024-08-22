@@ -23,7 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: top;
-            overflow: hidden;
+
         }
 
         html,
@@ -68,6 +68,7 @@
         h1,
         h2 {
             font-size: 1.7rem;
+            font-weight: normal;
             text-align: center;
             color: #4a4a4a;
             margin: 0;
@@ -75,8 +76,19 @@
             margin-bottom: 25px;
         }
 
+        h1bold {
+            font-size: 1.7rem;
+            font-weight: bold;
+            text-align: center;
+            color: #4a4a4a;
+            margin: 0;
+            margin-top: -45px;
+            margin-bottom: 25px;
+        }
+
         .h2 {
             font-size: 1.4rem;
+            font-weight: bold;
         }
 
         p {
@@ -374,7 +386,8 @@
 <body>
     <div class="calculator">
         <div id="introPage" class="section active">
-            <h1>D & K's Mortgage Calculator</h1>
+            <h1>D & K's</h1><br>
+	    <h1bold>Mortgage Calculator</h1bold>
             <p class="page-description">Calculate mortgage repayments based on our sale, savings, and Hubby House purchase.</p>
             <div class="info-rectangle">
                 <div>

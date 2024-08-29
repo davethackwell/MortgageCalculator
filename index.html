@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=no, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=no, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MortgageCalc">
@@ -23,7 +23,6 @@
             display: flex;
             justify-content: center;
             align-items: top;
-
         }
 
         html,
@@ -164,7 +163,7 @@
         .accent {
             accent-color: #4CAF50;
             background-color: red;
-        }	
+        }
 
         .button-group {
             display: flex;
@@ -471,13 +470,15 @@
         <div id="section2" class="section">
             <h2 class="h2">Savings and Finances</h2>
             <p class="page-description">Enter our savings, additional capital, and interest rate information.</p>
-            <div class="form-group">
-                <label for="jointSavings">Joint Savings (£):</label>
-                <input type="tel" id="jointSavings" value="20,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
-            </div>
-            <div class="form-group">
-                <label for="additionalCapital">Additional Capital (£):</label>
-                <input type="tel" id="additionalCapital" value="0" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+            <div class="input-pair">
+                <div class="form-group">
+                    <label for="jointSavings">Joint Savings (£):</label>
+                    <input type="tel" id="jointSavings" value="20,000" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                </div>
+                <div class="form-group">
+                    <label for="extraCapPreInterest">Extra Cap Pre-Interest (£):</label>
+                    <input type="tel" id="extraCapPreInterest" value="0" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                </div>
             </div>
             <div class="form-group">
                 <label for="currentTotalCapital">Current Total Capital (£):</label>
@@ -503,6 +504,19 @@
                     <div>
                         <label for="capitalIncrease">Capital Increase (£):</label>
                         <input type="text" id="capitalIncrease" readonly>
+                    </div>
+                </div>
+            </div>
+            <!-- New fields for Extra Cap Post-Interest and New Final Capital -->
+            <div class="form-group">
+                <div class="input-pair">
+                    <div>
+                        <label for="extraCapPostInterest">Extra Cap Post-Interest (£):</label>
+                        <input type="tel" id="extraCapPostInterest" value="0" oninput="formatInput(this); updateCalculations(); handleInputChange()">
+                    </div>
+                    <div>
+                        <label for="newFinalCapital">New Final Capital (£):</label>
+                        <input type="text" id="newFinalCapital" readonly>
                     </div>
                 </div>
             </div>
@@ -651,9 +665,9 @@
             const estateAgentFees = parseNumber(document.getElementById('estateAgentFees').value);
             const solicitorsFees = parseNumber(document.getElementById('solicitorsFees').value);
             const sellingFees = estateAgentFees + solicitorsFees;
-            const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
+            const extraCapPreInterest = parseNumber(document.getElementById('extraCapPreInterest').value);
 
-            const baseSavings = jointSavings + (currentProperty - remainingMortgage - sellingFees) + additionalCapital;
+            const baseSavings = jointSavings + (currentProperty - remainingMortgage - sellingFees) + extraCapPreInterest;
             const newTotalSavings = baseSavings * Math.pow(1 + savingsInterestRate, months);
 
             return newTotalSavings;
@@ -666,16 +680,17 @@
             const estateAgentFees = parseNumber(document.getElementById('estateAgentFees').value);
             const solicitorsFees = parseNumber(document.getElementById('solicitorsFees').value);
             const sellingFees = estateAgentFees + solicitorsFees;
-            const additionalCapital = parseNumber(document.getElementById('additionalCapital').value);
+            const extraCapPreInterest = parseNumber(document.getElementById('extraCapPreInterest').value);
 
-            return jointSavings + (currentProperty - remainingMortgage - sellingFees) + additionalCapital;
+            return jointSavings + (currentProperty - remainingMortgage - sellingFees) + extraCapPreInterest;
         }
 
         function calculateCapital() {
             const newTotalSavings = calculateNewTotalSavings();
+            const extraCapPostInterest = parseNumber(document.getElementById('extraCapPostInterest').value);
             const buyingFees = parseNumber(document.getElementById('buyingFees').value);
 
-            return newTotalSavings - buyingFees;
+            return newTotalSavings + extraCapPostInterest - buyingFees;
         }
 
         function updateCalculations() {
@@ -689,6 +704,11 @@
             const newTotalCapital = Math.max(calculateNewTotalSavings(), 0);
             document.getElementById('newTotalCapital').value = formatNumber(newTotalCapital);
             document.getElementById('capitalIncrease').value = formatNumber(newTotalCapital - calculateCurrentTotalCapital());
+
+            const extraCapPostInterest = parseNumber(document.getElementById('extraCapPostInterest').value);
+            const newFinalCapital = newTotalCapital + extraCapPostInterest;
+            document.getElementById('newFinalCapital').value = formatNumber(newFinalCapital);
+
             document.getElementById('capitalBeforeStampDuty').value = formatNumber(Math.max(capital, 0));
             document.getElementById('stampDuty').value = formatNumber(stampDuty);
             document.getElementById('capitalAfterStampDuty').value = formatNumber(Math.max(capitalAfterStampDuty, 0));
